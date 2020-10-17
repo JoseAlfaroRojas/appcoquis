@@ -14,7 +14,13 @@ class ClasificacionController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $clasificaciones = Clasificacion::all();
+            $response = $clasificaciones;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

@@ -53,7 +53,7 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            $usuario = User::where('id', $id)->with(['rols', 'direccions', 'estadousuarios'])->first();
+            $usuario = User::where('id', $id)->with(['rols', 'direccions', 'estadousuarios', 'calificacions', 'pedidos'])->first();
             $response = $usuario;
             return response()->json($response, 200);
         } catch (Exception $e) {

@@ -14,7 +14,13 @@ class TipovehiculoController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $tiposvehiculo = Tipovehiculo::all();
+            $response = $tiposvehiculo;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

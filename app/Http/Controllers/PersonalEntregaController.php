@@ -14,7 +14,13 @@ class PersonalEntregaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $personalesentrega = PersonalEntrega::all();
+            $response = $personalesentrega;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class PersonalEntregaController extends Controller
      * @param  \App\Models\PersonalEntrega  $personalEntrega
      * @return \Illuminate\Http\Response
      */
-    public function show(PersonalEntrega $personalEntrega)
+    public function show($id)
     {
-        //
+        try {
+            $personalentrega = PersonalEntrega::where('id', $id)->with(['vehiculos', 'pedidos'])->first();
+            $response = $personalentrega;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

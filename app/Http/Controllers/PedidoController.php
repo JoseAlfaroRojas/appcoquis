@@ -14,7 +14,13 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $pedidos = Estadousuario::all();
+            $response = $pedidos;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function show(Pedido $pedido)
+    public function show($id)
     {
-        //
+        try {
+            $pedido = Pedido::where('id', $id)->with(['productos', 'estadopedidos', 'tipoentregas', 'direccions', 'users', 'personal_entregas'])->first();
+            $response = $pedido;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

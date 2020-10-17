@@ -14,7 +14,13 @@ class TipoentregaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $tiposentrega = Tipoentrega::all();
+            $response = $tiposentrega;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
