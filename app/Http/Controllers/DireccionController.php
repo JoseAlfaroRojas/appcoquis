@@ -53,7 +53,7 @@ class DireccionController extends Controller
     public function show($id)
     {
         try {
-            $direccion = Direccion::where('id', $id)->first();
+            $direccion = Direccion::where('id', $id)->with(['user'])->first();
             $response = $direccion;
             return response()->json($response, 200);
         } catch (Exception $e) {

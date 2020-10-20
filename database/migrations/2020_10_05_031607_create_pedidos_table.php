@@ -47,7 +47,7 @@ class CreatePedidosTable extends Migration
     public function down()
     {
         Schema::table('pedidos', function (Blueprint $table) {
-            $table->dropForeign('pedidos_client_id_foreign');
+            $table->dropForeign('pedidos_user_id_foreign');
             $table->dropForeign('pedidos_personal_entrega_id');
             $table->dropForeign('pedidos_tipoentrega_id_foreign');
             $table->dropForeign('pedidos_estadopedido_id_foreign');

@@ -32,7 +32,7 @@ class CreatePersonalEntregasTable extends Migration
      */
     public function down()
     {
-        Schema::table('pedidos', function (Blueprint $table) {
+        Schema::table('personal_entregas', function (Blueprint $table) {
             $table->dropForeign('personal_entregas_vehiculo_id_foreign');
         });
         Schema::dropIfExists('personal_entregas');

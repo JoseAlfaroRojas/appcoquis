@@ -43,8 +43,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('', [UserController::class, 'index']);
             //user/#
             Route::post('user/{id}', [UserController::class, 'show']);
-            //new-user
-            Route::post('new-user/{id}', [UserController::class, 'show']);
+            //store/
+            Route::post('store', [UserController::class, 'store']);
             //roles/
             Route::group(['prefix' => 'roles'], function ($router) {
                 //-/
@@ -56,14 +56,14 @@ Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'direcciones'], function ($router) {
                 //direccion/#
                 Route::get('direccion/{id}', [DireccionController::class, 'show']);
+                //store/
+                Route::post('store', [DireccionController::class, 'store']);
             });
             //estado-user/
             Route::get('estado-user', [EstadousuarioController::class, 'index']);
 
             //login/
             Route::post('login', [UserController::class, 'login']);
-            //register/
-            Route::post('register', [UserController::class, 'register']);
             //logout/
             Route::post('logout', [UserController::class, 'logout']);
         });
@@ -72,6 +72,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['prefix' => 'productos'], function ($router) {
             //-/
             Route::get('', [ProductoController::class, 'index']);
+            //store/
+            Route::post('store', [ProductoController::class, 'store']);
             //producto/#
             Route::get('producto/{id}', [ProductoController::class, 'show']);
             //categorias/
@@ -85,12 +87,16 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('estado-producto', [EstadoproductoController::class, 'index']);
             //clasificaciones/
             Route::get('clasificaciones', [ClasificacionController::class, 'index']);
+            //store-calificacion/
+            Route::get('store-calificacion', [CalificacionController::class, 'store']);
         });
 
         //pedidos/
         Route::group(['prefix' => 'pedidos'], function ($router) {
             //-/
             Route::get('', [PedidoController::class, 'index']);
+            //store/
+            Route::get('store', [PedidoController::class, 'store']);
             //pedido/#
             Route::get('pedido/{id}', [PedidoController::class, 'show']);
             //entregas/
