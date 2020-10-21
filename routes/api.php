@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +44,6 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('', [UserController::class, 'index']);
             //user/#
             Route::post('user/{id}', [UserController::class, 'show']);
-            //store/
-            Route::post('store', [UserController::class, 'store']);
             //roles/
             Route::group(['prefix' => 'roles'], function ($router) {
                 //-/
@@ -62,10 +61,12 @@ Route::group(['prefix' => 'v1'], function () {
             //estado-user/
             Route::get('estado-user', [EstadousuarioController::class, 'index']);
 
+            //register/
+            Route::post('register', [AuthController::class, 'register']);
             //login/
-            Route::post('login', [UserController::class, 'login']);
+            Route::post('login', [AuthController::class, 'login']);
             //logout/
-            Route::post('logout', [UserController::class, 'logout']);
+            Route::post('logout', [AuthController::class, 'logout']);
         });
 
         //productos/

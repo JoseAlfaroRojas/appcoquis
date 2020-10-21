@@ -53,7 +53,8 @@ class PedidoController extends Controller
     public function show($id)
     {
         try {
-            $pedido = Pedido::where('id', $id)->with(['productos', 'estadopedidos', 'tipoentregas', 'direccions', 'users', 'personal_entregas'])->first();
+            $pedido = Pedido::where('id', $id)
+                ->with(['productos', 'estadopedido', 'tipoentrega', 'direccion', 'user', 'personal_entrega'])->first();
             $response = $pedido;
             return response()->json($response, 200);
         } catch (Exception $e) {

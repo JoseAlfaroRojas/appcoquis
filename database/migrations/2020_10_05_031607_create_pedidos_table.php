@@ -48,7 +48,7 @@ class CreatePedidosTable extends Migration
     {
         Schema::table('pedidos', function (Blueprint $table) {
             $table->dropForeign('pedidos_user_id_foreign');
-            $table->dropForeign('pedidos_personal_entrega_id');
+            $table->dropForeign('pedidos_personal_entrega_id_foreign');
             $table->dropForeign('pedidos_tipoentrega_id_foreign');
             $table->dropForeign('pedidos_estadopedido_id_foreign');
             $table->dropForeign('pedidos_direccion_id_foreign');

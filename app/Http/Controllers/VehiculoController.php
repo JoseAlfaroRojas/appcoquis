@@ -53,7 +53,7 @@ class VehiculoController extends Controller
     public function show($id)
     {
         try {
-            $vehiculo = Vehiculo::where('id', $id)->with(['marcas', 'tipovehiculos'])->first();
+            $vehiculo = Vehiculo::where('id', $id)->with(['marca', 'tipovehiculo'])->first();
             $response = $vehiculo;
             return response()->json($response, 200);
         } catch (Exception $e) {

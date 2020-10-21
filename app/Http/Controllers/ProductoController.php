@@ -53,7 +53,7 @@ class ProductoController extends Controller
     public function show($id)
     {
         try {
-            $producto = Producto::where('id', $id)->with(['calificacions', 'categorias', 'clasificacions', 'estadoproductos'])->first();
+            $producto = Producto::where('id', $id)->with(['calificacions', 'categorias', 'clasificacion', 'estadoproducto'])->first();
             $response = $producto;
             return response()->json($response, 200);
         } catch (Exception $e) {

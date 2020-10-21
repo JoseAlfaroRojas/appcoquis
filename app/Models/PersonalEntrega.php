@@ -16,6 +16,6 @@ class PersonalEntrega extends Model
 
     public function vehiculos()
     {
-        return $this->hasMany('App\Models\Vehiculo');
+        return $this->belongsTo('App\Models\Vehiculo');
     }
 }

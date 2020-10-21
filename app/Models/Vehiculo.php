@@ -19,8 +19,8 @@ class Vehiculo extends Model
         return $this->belongsTo('App\Models\Marca');
     }
 
-    public function personalentrega()
+    public function personalentregas()
     {
-        return $this->belongsTo('App\Models\PersonalEntrega');
+        return $this->hasMany('App\Models\PersonalEntrega');
     }
 }

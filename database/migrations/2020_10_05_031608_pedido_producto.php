@@ -13,7 +13,7 @@ class ProductoPedido extends Migration
      */
     public function up()
     {
-        Schema::create('producto_pedido', function (Blueprint $table) {
+        Schema::create('pedido_producto', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('amount');
             $table->double('total', 14, 2);
@@ -35,10 +35,10 @@ class ProductoPedido extends Migration
      */
     public function down()
     {
-        Schema::table('producto_pedido', function (Blueprint $table) {
-            $table->dropForeign('producto_pedido_producto_id_foreign');
-            $table->dropForeign('producto_pedido_pedido_id_foreign');
+        Schema::table('pedido_producto', function (Blueprint $table) {
+            $table->dropForeign('pedido_producto_producto_id_foreign');
+            $table->dropForeign('pedido_producto_pedido_id_foreign');
         });
-        Schema::dropIfExists('producto_pedido');
+        Schema::dropIfExists('pedido_producto');
     }
 }
