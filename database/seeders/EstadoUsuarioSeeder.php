@@ -16,12 +16,12 @@ class EstadoUsuarioSeeder extends Seeder
     {
         //1
         $Estadousuario = new Estadousuario();
-        $Estadousuario->name = 'Activo';
+        $Estadousuario->name = 'Habilitado';
         $Estadousuario->save();
 
         //2
         $Estadousuario = new Estadousuario();
-        $Estadousuario->name = 'Inactivo';
+        $Estadousuario->name = 'Deshabilitado';
         $Estadousuario->save();
     }
 }

@@ -11,12 +11,12 @@ class Pedido extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User')->withTimestamps();
+        return $this->belongsTo('App\Models\User');
     }
 
     public function productos()
     {
-        return $this->belongsToMany('App\Models\Producto');
+        return $this->belongsToMany('App\Models\Producto')->withPivot('amount', 'total');
     }
 
     public function estadopedido()
@@ -29,12 +29,7 @@ class Pedido extends Model
         return $this->belongsTo('App\Models\Tipoentrega');
     }
 
-    public function direccion()
-    {
-        return $this->belongsTo('App\Models\Direccion');
-    }
-
-    public function personalntrega()
+    public function personalentrega()
     {
         return $this->belongsTo('App\Models\PersonalEntrega');
     }

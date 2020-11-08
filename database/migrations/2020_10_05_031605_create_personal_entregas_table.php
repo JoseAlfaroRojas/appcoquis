@@ -15,13 +15,17 @@ class CreatePersonalEntregasTable extends Migration
     {
         Schema::create('personal_entregas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('email')->unique();
             $table->string('name');
+            $table->string('telephone_number');
 
             $table->unsignedInteger('vehiculo_id');
+            $table->unsignedInteger('estadousuario_id');
 
             $table->timestamps();
 
             $table->foreign('vehiculo_id')->references('id')->on('vehiculos');
+            $table->foreign('estadousuario_id')->references('id')->on('estadousuarios');
         });
     }
 

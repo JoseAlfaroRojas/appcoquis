@@ -19,7 +19,7 @@ class RolSeeder extends Seeder
         $rol->save();
 
         $rol = new Rol();
-        $rol->name = 'Cliente';
+        $rol->name = 'Vendedor';
         $rol->save();
     }
 }

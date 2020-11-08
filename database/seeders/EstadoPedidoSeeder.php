@@ -16,18 +16,32 @@ class EstadoPedidoSeeder extends Seeder
     {
         //1
         $Estadopedido = new Estadopedido();
-        $Estadopedido->name = 'Por facturar';
+        $Estadopedido->name = 'Pendiente';
         $Estadopedido->save();
 
         //2
         $Estadopedido = new Estadopedido();
-        $Estadopedido->name = 'En proceso';
+        $Estadopedido->name = 'En preparación';
         $Estadopedido->save();
 
-        //2
+        //3
+        $Estadopedido = new Estadopedido();
+        $Estadopedido->name = 'Listo para entregar';
+        $Estadopedido->save();
+
+        //4
+        $Estadopedido = new Estadopedido();
+        $Estadopedido->name = 'Listo para retirar';
+        $Estadopedido->save();
+
+        //5
         $Estadopedido = new Estadopedido();
         $Estadopedido->name = 'Facturado';
         $Estadopedido->save();
 
+        //6
+        $Estadopedido = new Estadopedido();
+        $Estadopedido->name = 'Completado';
+        $Estadopedido->save();
     }
 }

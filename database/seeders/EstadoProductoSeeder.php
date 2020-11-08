@@ -16,12 +16,12 @@ class EstadoProductoSeeder extends Seeder
     {
         //1
         $Estadoproducto = new Estadoproducto();
-        $Estadoproducto->name = 'Activo';
+        $Estadoproducto->name = 'Habilitado';
         $Estadoproducto->save();
 
         //2
         $Estadoproducto = new Estadoproducto();
-        $Estadoproducto->name = 'Inactivo';
+        $Estadoproducto->name = 'Deshabilitado';
         $Estadoproducto->save();
     }
 }

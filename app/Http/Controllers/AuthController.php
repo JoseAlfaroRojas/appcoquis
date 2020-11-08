@@ -22,6 +22,7 @@ class AuthController extends Controller
             'telephone_number' => 'required|string|min:8',
             'rol_id' => 'required',
             'photo' => 'required',
+            'estadousuario_id' => 'required',
         ]);
         //Retornar mensajes de validación
         if ($validator->fails()) {
@@ -42,12 +43,12 @@ class AuthController extends Controller
                 'user' => Auth::user(),
                 'token' => $token->accessToken
             ];
-            return
-                response()->json($response, 200);
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 422);
         }
     }
+
     public function login(Request $request)
     {
         //Validar campos de login
@@ -82,6 +83,7 @@ class AuthController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+
     public function logout()
     {
         //Verificar que exista algún usuario logueado

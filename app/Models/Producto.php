@@ -19,11 +19,6 @@ class Producto extends Model
         return $this->belongsTo('App\Models\Estadoproducto');
     }
 
-    public function calificacions()
-    {
-        return $this->hasMany('App\Models\Calificacion');
-    }
-
     public function categorias()
     {
         return $this->belongsToMany('App\Models\Categoria')->withTimestamps();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PersonalEntrega;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 
 class PersonalEntregaController extends Controller
 {
@@ -15,7 +16,7 @@ class PersonalEntregaController extends Controller
     public function index()
     {
         try {
-            $personalesentrega = PersonalEntrega::all();
+            $personalesentrega = PersonalEntrega::orderBy('id')->with(['vehiculo', 'estadousuario'])->get();
             $response = $personalesentrega;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -23,6 +24,16 @@ class PersonalEntregaController extends Controller
         }
     }
 
+    public function activos()
+    {
+        try {
+            $personalesentrega = PersonalEntrega::where('estadousuario_id', 1)->with(['vehiculo', 'estadousuario'])->get();
+            $response = $personalesentrega;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -41,7 +52,16 @@ class PersonalEntregaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $personalEntrega = new PersonalEntrega();
+            $personalEntrega->name = $request->input('name');
+            $personalEntrega->vehiculo_id = $request->input('vehiculo_id');
+
+            $personalEntrega->save();
+            return response()->json($personalEntrega, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -53,8 +73,8 @@ class PersonalEntregaController extends Controller
     public function show($id)
     {
         try {
-            $personalentrega = PersonalEntrega::where('id', $id)->with(['vehiculos', 'pedidos'])->first();
-            $response = $personalentrega;
+            $personalesentrega = PersonalEntrega::where('id', $id)->with(['vehiculo', 'estadousuario'])->first();
+            $response = $personalesentrega;
             return response()->json($response, 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 422);

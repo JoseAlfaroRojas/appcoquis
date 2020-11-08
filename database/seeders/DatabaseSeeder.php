@@ -28,10 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VehiculoSeeder::class);
         $this->call(PersonalEntregaSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(DireccionSeeder::class);
         $this->call(ProductoSeeder::class);
-        //$this->call(PedidoSeeder::class);
-
-        $this->call(CalificacionSeeder::class);
+        $this->call(PedidoSeeder::class);
     }
 }

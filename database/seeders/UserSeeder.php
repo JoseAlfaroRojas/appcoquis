@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
 
         //2
         $objetoUsuario = User::create([
-            'name' => 'Administrador',
+            'name' => 'Sleepy Joe Biden',
             'email' => 'correo2@prueba.com',
             'password' => bcrypt('123456'),
             'telephone_number' => '99887766',

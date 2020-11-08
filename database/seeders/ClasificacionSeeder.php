@@ -16,17 +16,17 @@ class ClasificacionSeeder extends Seeder
     {
         //1
         $Clasificacion = new Clasificacion();
-        $Clasificacion->name = 'Res';
+        $Clasificacion->name = 'Platillo';
         $Clasificacion->save();
 
         //2
         $Clasificacion = new Clasificacion();
-        $Clasificacion->name = 'Cerdo';
+        $Clasificacion->name = 'Refresco';
         $Clasificacion->save();
 
         //3
         $Clasificacion = new Clasificacion();
-        $Clasificacion->name = 'Vegetariano';
+        $Clasificacion->name = 'Extra';
         $Clasificacion->save();
     }
 }

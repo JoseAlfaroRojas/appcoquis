@@ -15,7 +15,30 @@ class ProductoController extends Controller
     public function index()
     {
         try {
-            $productos = Producto::all();
+            $productos = Producto::where('estadoproducto_id', 1 || 2)->with(['categorias', 'clasificacion', 'estadoproducto'])->get();
+            $response = $productos;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    public function activos()
+    {
+        try {
+            $productos = Producto::where('estadoproducto_id', 1)->with(['categorias', 'clasificacion', 'estadoproducto'])->get();
+            $response = $productos;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+
+    public function inactivos()
+    {
+        try {
+            $productos = Producto::where('estadoproducto_id', 2)->with(['categorias', 'clasificacion', 'estadoproducto'])->get();
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -53,7 +76,7 @@ class ProductoController extends Controller
     public function show($id)
     {
         try {
-            $producto = Producto::where('id', $id)->with(['calificacions', 'categorias', 'clasificacion', 'estadoproducto'])->first();
+            $producto = Producto::where('id', $id)->with(['categorias', 'clasificacion', 'estadoproducto'])->first();
             $response = $producto;
             return response()->json($response, 200);
         } catch (Exception $e) {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +20,7 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\PersonalEntregaController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,31 +37,8 @@ use App\Http\Controllers\PedidoController;
 Route::group(['prefix' => 'v1'], function () {
     //coquis/
     Route::group(['prefix' => 'coquis'], function () {
-        //users/
-        Route::group([
-            'prefix' => 'users'
-        ], function ($router) {
-            //-/
-            Route::get('', [UserController::class, 'index']);
-            //user/#
-            Route::post('user/{id}', [UserController::class, 'show']);
-            //roles/
-            Route::group(['prefix' => 'roles'], function ($router) {
-                //-/
-                Route::get('', [RolController::class, 'index']);
-                //rol/#
-                Route::get('rol/{id}', [RolController::class, 'show']);
-            });
-            //direcciones/
-            Route::group(['prefix' => 'direcciones'], function ($router) {
-                //direccion/#
-                Route::get('direccion/{id}', [DireccionController::class, 'show']);
-                //store/
-                Route::post('store', [DireccionController::class, 'store']);
-            });
-            //estado-user/
-            Route::get('estado-user', [EstadousuarioController::class, 'index']);
-
+        //auth/
+        Route::group(['prefix' => 'auth'], function ($router) {
             //register/
             Route::post('register', [AuthController::class, 'register']);
             //login/
@@ -69,12 +47,31 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('logout', [AuthController::class, 'logout']);
         });
 
+        //users/
+        Route::group([
+            'prefix' => 'users'
+        ], function ($router) {
+            //-/
+            Route::get('', [UserController::class, 'index']);
+            //user/#
+            Route::post('user/{id}', [UserController::class, 'show'])->middleware(['auth:api']);
+            //roles/
+            Route::group(['prefix' => 'roles'], function ($router) {
+                //-/
+                Route::get('', [RolController::class, 'index']);
+                //rol/#
+                Route::get('rol/{id}', [RolController::class, 'show']);
+            });
+            //estado-user/
+            Route::get('estado-user', [EstadousuarioController::class, 'index']);
+        });
+
         //productos/
         Route::group(['prefix' => 'productos'], function ($router) {
             //-/
-            Route::get('', [ProductoController::class, 'index']);
+            Route::get('', [ProductoController::class, 'activos']);
             //store/
-            Route::post('store', [ProductoController::class, 'store']);
+            Route::post('store', [ProductoController::class, 'store'])->middleware(['auth:api']);
             //producto/#
             Route::get('producto/{id}', [ProductoController::class, 'show']);
             //categorias/
@@ -88,8 +85,6 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('estado-producto', [EstadoproductoController::class, 'index']);
             //clasificaciones/
             Route::get('clasificaciones', [ClasificacionController::class, 'index']);
-            //store-calificacion/
-            Route::get('store-calificacion', [CalificacionController::class, 'store']);
         });
 
         //pedidos/
@@ -103,7 +98,7 @@ Route::group(['prefix' => 'v1'], function () {
             //entregas/
             Route::group(['prefix' => 'personal-de-entrega'], function ($router) {
                 //-/
-                Route::get('', [PersonalEntregaController::class, 'index']);
+                Route::get('', [PersonalEntregaController::class, 'activos']);
                 //repartidor/#
                 Route::get('repartidor/{id}', [PersonalEntregaController::class, 'show']);
                 //estado-pedido/

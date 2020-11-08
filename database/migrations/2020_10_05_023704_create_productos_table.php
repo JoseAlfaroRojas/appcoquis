@@ -18,7 +18,7 @@ class CreateProductosTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->double('price', 10, 2);
-            $table->string('photo');
+            $table->string('photo', 500);
 
             $table->unsignedInteger('clasificacion_id');
             $table->unsignedInteger('estadoproducto_id');

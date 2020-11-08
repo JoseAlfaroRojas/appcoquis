@@ -23,8 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'telephone_number',
-        'photo',
         'rol_id',
+        'photo',
         'estadousuario_id',
     ];
 
@@ -55,16 +55,6 @@ class User extends Authenticatable
     public function estadousuario()
     {
         return $this->belongsTo('App\Models\Estadousuario');
-    }
-
-    public function direccions()
-    {
-        return $this->hasMany('App\Models\Direccion');
-    }
-
-    public function calificacions()
-    {
-        return $this->hasMany('App\Models\Calificacion');
     }
 
     public function pedidos()

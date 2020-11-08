@@ -15,11 +15,12 @@ class PedidoProducto extends Migration
     {
         Schema::create('pedido_producto', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('amount');
-            $table->double('total', 14, 2);
 
             $table->unsignedInteger('producto_id');
             $table->unsignedInteger('pedido_id');
+
+            $table->integer('amount');
+            $table->double('total', 14, 2);
 
             $table->timestamps();
 

@@ -41,7 +41,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $user = new User();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = $request->input('password');
+            $user->telephone_number = $request->input('telephone_number');
+            $user->photo = $request->input('photo');
+            $user->rol_id = $request->input('rol_id');
+            $user->estadousuario_id = $request->input('estadousuario_id');
+
+            $user->save();
+            return response()->json($user, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -53,7 +67,7 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            $usuario = User::where('id', $id)->with(['rol', 'direccions', 'estadousuario', 'calificacions', 'pedidos'])->first();
+            $usuario = User::where('id', $id)->with(['rol', 'estadousuario', 'pedidos'])->first();
             $response = $usuario;
             return response()->json($response, 200);
         } catch (Exception $e) {
