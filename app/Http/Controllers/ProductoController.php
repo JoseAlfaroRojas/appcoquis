@@ -15,7 +15,7 @@ class ProductoController extends Controller
     public function index()
     {
         try {
-            $productos = Producto::where('estadoproducto_id', 1 || 2)->with(['categorias', 'clasificacion', 'estadoproducto'])->get();
+            $productos = Producto::orderBy('estadoproducto_id')->with(['categorias', 'clasificacion', 'estadoproducto'])->get();
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {

@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $usuarios = User::all();
+            $usuarios = User::orderBy('estadousuario_id')->with(['rol', 'estadousuario'])->get();
             $response = $usuarios;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -67,7 +67,7 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            $usuario = User::where('id', $id)->with(['rol', 'estadousuario', 'pedidos'])->first();
+            $usuario = User::where('id', $id)->with(['rol', 'estadousuario'])->first();
             $response = $usuario;
             return response()->json($response, 200);
         } catch (Exception $e) {

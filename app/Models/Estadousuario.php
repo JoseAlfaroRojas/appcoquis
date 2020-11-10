@@ -9,6 +9,11 @@ class Estadousuario extends Model
 {
     use HasFactory;
 
+    public function users()
+    {
+        return $this->hasMany('App\Models\User');
+    }
+
     public function personal_entregas()
     {
         return $this->hasMany('App\Models\PersonalEntrega');

@@ -69,7 +69,7 @@ Route::group(['prefix' => 'v1'], function () {
         //productos/
         Route::group(['prefix' => 'productos'], function ($router) {
             //-/
-            Route::get('', [ProductoController::class, 'activos']);
+            Route::get('', [ProductoController::class, 'index']);
             //store/
             Route::post('store', [ProductoController::class, 'store'])->middleware(['auth:api']);
             //producto/#
@@ -95,16 +95,12 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('store', [PedidoController::class, 'store']);
             //pedido/#
             Route::get('pedido/{id}', [PedidoController::class, 'show']);
-            //entregas/
+            //personal-de-entrega/
             Route::group(['prefix' => 'personal-de-entrega'], function ($router) {
                 //-/
-                Route::get('', [PersonalEntregaController::class, 'activos']);
+                Route::get('', [PersonalEntregaController::class, 'index']);
                 //repartidor/#
                 Route::get('repartidor/{id}', [PersonalEntregaController::class, 'show']);
-                //estado-pedido/
-                Route::get('estado-pedido', [EstadopedidoController::class, 'index']);
-                //tipos-entrega/
-                Route::get('tipos-entrega', [TipoentregaController::class, 'index']);
                 //vehiculos/
                 Route::group(['prefix' => 'vehiculos'], function ($router) {
                     //-/
@@ -119,6 +115,8 @@ Route::group(['prefix' => 'v1'], function () {
             });
             //estado-pedido/
             Route::get('estado-pedido', [EstadopedidoController::class, 'index']);
+            //tipos-entrega/
+            Route::get('tipos-entrega', [TipoentregaController::class, 'index']);
         });
     });
 });

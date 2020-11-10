@@ -16,7 +16,7 @@ class PersonalEntregaController extends Controller
     public function index()
     {
         try {
-            $personalesentrega = PersonalEntrega::orderBy('id')->with(['vehiculo', 'estadousuario'])->get();
+            $personalesentrega = PersonalEntrega::orderBy('estadousuario_id')->with(['vehiculo', 'estadousuario'])->get();
             $response = $personalesentrega;
             return response()->json($response, 200);
         } catch (Exception $e) {

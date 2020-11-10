@@ -26,7 +26,7 @@ class PedidoController extends Controller
     public function activos()
     {
         try {
-            $pedidos = Pedido::where('estadopedido', 1)->with(['user', 'productos', 'estadopedido', 'tipoentrega', 'personalentrega'])->get();
+            $pedidos = Pedido::orderBy('estadopedido_id')->with(['user', 'productos', 'estadopedido', 'tipoentrega', 'personalentrega'])->get();
             $response = $pedidos;
             return response()->json($response, 200);
         } catch (Exception $e) {
