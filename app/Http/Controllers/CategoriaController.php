@@ -54,6 +54,7 @@ class CategoriaController extends Controller
     {
         try {
             $categoria = Categoria::where('id', $id)->with(['productos'])->first();
+            //$categoria = Categoria::where('id', $id)->first();
             $response = $categoria;
             return response()->json($response, 200);
         } catch (Exception $e) {

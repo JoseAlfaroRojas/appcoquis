@@ -54,7 +54,7 @@ Route::group(['prefix' => 'v1'], function () {
             //-/
             Route::get('', [UserController::class, 'index']);
             //user/#
-            Route::post('user/{id}', [UserController::class, 'show'])->middleware(['auth:api']);
+            Route::get('user/{id}', [UserController::class, 'show'])->middleware(['auth:api']);
             //roles/
             Route::group(['prefix' => 'roles'], function ($router) {
                 //-/
@@ -85,6 +85,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('estado-producto', [EstadoproductoController::class, 'index']);
             //clasificaciones/
             Route::get('clasificaciones', [ClasificacionController::class, 'index']);
+            //clasificacion/#
+            Route::get('clasificacion/{id}', [ClasificacionController::class, 'show']);
         });
 
         //pedidos/

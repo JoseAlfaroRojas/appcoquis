@@ -15,7 +15,7 @@ class ClasificacionController extends Controller
     public function index()
     {
         try {
-            $clasificaciones = Clasificacion::all();
+            $clasificaciones = Clasificacion::orderBy('name', 'desc')->get();
             $response = $clasificaciones;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -50,9 +50,15 @@ class ClasificacionController extends Controller
      * @param  \App\Models\Clasificacion  $clasificacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Clasificacion $clasificacion)
+    public function show($id)
     {
-        //
+        try {
+            $clasificacion = Clasificacion::where('id', $id)->first();
+            $response = $clasificacion;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

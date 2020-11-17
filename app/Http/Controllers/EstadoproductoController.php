@@ -39,9 +39,15 @@ class EstadoproductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        //
+        try {
+            $estadoproducto = Estadoproducto::where('id', $id)->first();
+            $response = $estadoproducto;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

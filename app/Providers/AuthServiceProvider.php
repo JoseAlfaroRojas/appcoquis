@@ -29,11 +29,11 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
 
         Passport::tokensCan([
-            'administrador' => 'Gestión de pedidos y usuarios, registro de productos.  Generación de reportes.',
-            'vendedor' => 'Ver el menú y realizar pedidos.',
+            'Administrador' => 'Gestión de pedidos y usuarios, registro de productos.  Generación de reportes.',
+            'Vendedor' => 'Ver el menú y realizar pedidos.',
         ]);
         Passport::setDefaultScope([
-            'vendedor'
+            'Vendedor'
         ]);
     }
 }
