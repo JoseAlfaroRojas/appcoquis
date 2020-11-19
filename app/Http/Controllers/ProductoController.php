@@ -8,6 +8,8 @@ use App\Models\Estadoproducto;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManagerStatic as Image;
 
 use function PHPUnit\Framework\isNull;
 
@@ -102,8 +104,8 @@ class ProductoController extends Controller
                 $imageUpload = Image::make($file->getRealPath());
                 $path = 'images/';
                 $imageUpload->save(public_path($path) . $nombreImagen);
-                $producto->photo = $nombreImagen;
-                $producto->pathImagen = url($path) . "/" . $nombreImagen;
+                //$producto->photo = $nombreImagen;
+                $producto->photo = url($path) . "/" . $nombreImagen;
             }
 
             //Guardar en la base de datos
@@ -119,7 +121,8 @@ class ProductoController extends Controller
                 }
 
                 //Usar solo este para formulario sin imagen
-                if(!is_null($categorias)){
+
+                if(!is_null($request->input('categoria_id'))){
                     $producto->categorias()->attach($categorias);
                 }
 
@@ -171,9 +174,84 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make
+        ($request->all(),
+        [
+            'name' => 'required|min:4',
+            'description' => 'required|min:15',
+            'price' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+
+        try{
+            $producto = Producto::find($id);
+            $producto->name = $request->input('name');
+            $producto->description = $request->input('description');
+            $producto->price = $request->input('price');
+
+            //$clasificacion = $request->input('clasificacion_id');
+            $clasificacion =  Clasificacion::find($request->input('clasificacion_id'));
+            $producto->clasificacion()->associate($clasificacion->id);
+
+            //$estado = $request->input('estadoproducto_id');
+            $estado =  Estadoproducto::find($request->input('estadoproducto_id'));
+            $producto->estadoproducto()->associate($estado->id);
+
+            if ($request->hasFile('photo')) {
+
+                //Obtener archivo de imagen anterior
+                $productoImagen = public_path($producto->photo);
+
+                if (File::exists($productoImagen)) {
+                    //Borrar imagen anterior
+                    File::delete($productoImagen);
+                }
+
+                $file = $request->file('photo');
+                $nombreImagen = time() . "foto." . $file->getClientOriginalExtension();
+                $imageUpload = Image::make($file->getRealPath());
+                $path = 'images/';
+                $imageUpload->save(public_path($path) . $nombreImagen);
+                //$vproductoj->nombreImagen = $nombreImagen;
+                $producto->photo = url($path) . "/" . $nombreImagen;
+            }
+
+            if ($producto->update()) {
+                //Array de categorias
+
+                //Solo es necesario con la imagen
+                $categorias = $request->input('categoria_id');
+
+                //Solo es necesario con la imagen
+                if (!is_array($request->input('categoria_id'))) {
+                    //Formato array relación muchos a muchos
+                    $categorias = explode(',', $request->input('categoria_id'));
+                }
+
+                //Usar solo este para formulario sin imagen
+                //if (is_null($categorias) ){
+                if (!is_null($request->input('categoria_id'))) {
+
+                    $producto->categorias()->sync($categorias);
+                }
+                $response = "Producto actualizado con éxito ";
+                return response()->json($response, 200);
+            }
+
+            $response = [
+                'msg' => 'Error durante la actualización'
+            ];
+
+            return response()->json($response, 404);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
