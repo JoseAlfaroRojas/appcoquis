@@ -96,8 +96,8 @@ class ProductoController extends Controller
             $estado =  Estadoproducto::find($request->input('estadoproducto_id'));
             $producto->estadoproducto()->associate($estado->id);
 
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
                 $nombreImagen = time() . "foto." . $file->getClientOriginalExtension();
                 $imageUpload = Image::make($file->getRealPath());
                 $path = 'images/';
@@ -107,8 +107,8 @@ class ProductoController extends Controller
             }
 
             //Guardar en la base de datos
-            if($producto->save()){
-
+            if($producto->save())
+            {
                 //Solo es necesario con la imagen
                 $categorias = $request->input('categoria_id');
 
@@ -119,11 +119,11 @@ class ProductoController extends Controller
                 }
 
                 //Usar solo este para formulario sin imagen
-                if(is_null($request->input('categoria_id'))){
+                if(!is_null($categorias)){
                     $producto->categorias()->attach($categorias);
                 }
 
-                $response= "Producto creado con éxito ";
+                $response= "Producto creado con éxito";
                 return response()->json($response, 201);
             } else {
                 $response = [
