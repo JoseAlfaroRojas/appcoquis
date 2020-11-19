@@ -72,6 +72,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('', [ProductoController::class, 'index']);
             //store/
             Route::post('store', [ProductoController::class, 'store'])->middleware(['auth:api']);
+            //update/
+            Route::patch('update/{id}',[ProductoController::class,'update'])->middleware(['auth:api']);
             //producto/#
             Route::get('producto/{id}', [ProductoController::class, 'show']);
             //categorias/
