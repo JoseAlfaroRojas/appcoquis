@@ -47,7 +47,6 @@ class UserController extends Controller
             $user->email = $request->input('email');
             $user->password = $request->input('password');
             $user->telephone_number = $request->input('telephone_number');
-            $user->photo = $request->input('photo');
             $user->rol_id = $request->input('rol_id');
             $user->estadousuario_id = $request->input('estadousuario_id');
 
