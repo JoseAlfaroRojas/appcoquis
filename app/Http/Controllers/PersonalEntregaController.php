@@ -120,9 +120,20 @@ class PersonalEntregaController extends Controller
      * @param  \App\Models\PersonalEntrega  $personalEntrega
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PersonalEntrega $personalEntrega)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|min:4',
+                'email' => 'required|min:10',
+                'telephone_number' => 'required|min:8'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
     }
 
     /**

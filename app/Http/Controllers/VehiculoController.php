@@ -15,7 +15,7 @@ class VehiculoController extends Controller
     public function index()
     {
         try {
-            $vehiculos = Vehiculo::all();
+            $vehiculos = Vehiculo::with(['tipovehiculo', 'marca'])->get();
             $response = $vehiculos;
             return response()->json($response, 200);
         } catch (Exception $e) {
