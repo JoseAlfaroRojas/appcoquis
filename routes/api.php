@@ -73,7 +73,7 @@ Route::group(['prefix' => 'v1'], function () {
             //store/
             Route::post('store', [ProductoController::class, 'store'])->middleware(['auth:api']);
             //update/
-            Route::patch('update/{id}',[ProductoController::class,'update'])->middleware(['auth:api']);
+            Route::patch('update/{id}', [ProductoController::class, 'update'])->middleware(['auth:api']);
             //producto/#
             Route::get('producto/{id}', [ProductoController::class, 'show']);
             //categorias/
@@ -96,13 +96,15 @@ Route::group(['prefix' => 'v1'], function () {
             //-/
             Route::get('', [PedidoController::class, 'index']);
             //store/
-            Route::get('store', [PedidoController::class, 'store']);
+            Route::get('store', [PedidoController::class, 'store'])->middleware(['auth:api']);
             //pedido/#
             Route::get('pedido/{id}', [PedidoController::class, 'show']);
             //personal-de-entrega/
             Route::group(['prefix' => 'personal-de-entrega'], function ($router) {
                 //-/
                 Route::get('', [PersonalEntregaController::class, 'index']);
+                //store/
+                Route::post('store', [PersonalEntregaController::class, 'store'])->middleware(['auth:api']);
                 //repartidor/#
                 Route::get('repartidor/{id}', [PersonalEntregaController::class, 'show']);
                 //vehiculos/

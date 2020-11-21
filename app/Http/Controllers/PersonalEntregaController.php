@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\PersonalEntrega;
+use App\Models\Vehiculo;
+use App\Models\Estadousuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\TryCatch;
 
 class PersonalEntregaController extends Controller
@@ -52,10 +55,28 @@ class PersonalEntregaController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|min:4',
+                'email' => 'required|min:10',
+                'telephone_number' => 'required|min:8'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
         try {
             $personalEntrega = new PersonalEntrega();
             $personalEntrega->name = $request->input('name');
-            $personalEntrega->vehiculo_id = $request->input('vehiculo_id');
+            $personalEntrega->email = $request->input('email');
+            $personalEntrega->telephone_number = $request->input('telephone_number');
+
+            $vehiculo =  Vehiculo::find($request->input('vehiculo_id'));
+            $personalEntrega->vehiculo()->associate($vehiculo->id);
+            $estado =  Estadousuario::find($request->input('estadousuario_id'));
+            $personalEntrega->estadousuario()->associate($estado->id);
 
             $personalEntrega->save();
             return response()->json($personalEntrega, 200);
