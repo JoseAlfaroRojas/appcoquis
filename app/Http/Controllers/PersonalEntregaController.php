@@ -134,6 +134,29 @@ class PersonalEntregaController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->messages(), 422);
         }
+        try {
+            $personalEntrega = PersonalEntrega::find($id);
+            $personalEntrega->name = $request->input('name');
+            $personalEntrega->email = $request->input('email');
+            $personalEntrega->telephone_number = $request->input('telephone_number');
+
+            $vehiculo =  Vehiculo::find($request->input('vehiculo_id'));
+            $personalEntrega->vehiculo()->associate($vehiculo->id);
+            $estado =  Estadousuario::find($request->input('estadousuario_id'));
+            $personalEntrega->estadousuario()->associate($estado->id);
+
+            if ($personalEntrega->update()) {
+
+                $response = 'Personal de entrega actualizado';
+                return response()->json($response, 200);
+            }
+            $response = [
+                'msg' => 'Error durante la actualización'
+            ];
+            return response()->json($response, 404);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

@@ -105,6 +105,8 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::get('', [PersonalEntregaController::class, 'index']);
                 //store/
                 Route::post('store', [PersonalEntregaController::class, 'store'])->middleware(['auth:api']);
+                //update/
+                Route::patch('update/{id}', [PersonalEntregaController::class, 'update'])->middleware(['auth:api']);
                 //repartidor/#
                 Route::get('repartidor/{id}', [PersonalEntregaController::class, 'show']);
                 //vehiculos/
