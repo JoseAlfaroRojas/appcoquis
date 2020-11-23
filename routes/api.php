@@ -96,7 +96,7 @@ Route::group(['prefix' => 'v1'], function () {
             //-/
             Route::get('', [PedidoController::class, 'index']);
             //store/
-            Route::get('store', [PedidoController::class, 'store'])->middleware(['auth:api']);
+            Route::post('store', [PedidoController::class, 'store'])->middleware(['auth:api']);
             //pedido/#
             Route::get('pedido/{id}', [PedidoController::class, 'show']);
             //personal-de-entrega/

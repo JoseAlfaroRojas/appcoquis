@@ -29,7 +29,7 @@ class Pedido extends Model
         return $this->belongsTo('App\Models\Tipoentrega');
     }
 
-    public function personalentrega()
+    public function personal_entrega()
     {
         return $this->belongsTo('App\Models\PersonalEntrega');
     }

@@ -76,7 +76,6 @@ class ProductoController extends Controller
         ($request->all(),
         [
             'name' => 'required|min:4',
-            'description' => 'required|min:15',
             'price' => 'required|numeric'
         ]);
 
@@ -180,7 +179,6 @@ class ProductoController extends Controller
         ($request->all(),
         [
             'name' => 'required|min:4',
-            'description' => 'required|min:15',
             'price' => 'required|numeric'
         ]);
 
