@@ -60,6 +60,8 @@ class PedidoController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'client_name' => 'required',
+                'address' => 'required',
                 'client_telephone_number' => 'numeric'
             ]
         );
