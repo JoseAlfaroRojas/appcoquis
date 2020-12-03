@@ -151,9 +151,25 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pedido $pedido)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $pedido = Pedido::find($id);
+
+            $estado =  Estadopedido::find($request->input('estadopedido_id'));
+            $pedido->estadousuario()->associate($estado->id);
+
+            if ($pedido->update()) {
+                $response = 'Pedido actualizado';
+                return response()->json($response, 200);
+            }
+            $response = [
+                'msg' => 'Error durante la actualización'
+            ];
+            return response()->json($response, 404);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

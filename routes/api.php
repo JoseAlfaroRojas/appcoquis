@@ -52,9 +52,9 @@ Route::group(['prefix' => 'v1'], function () {
             'prefix' => 'users'
         ], function ($router) {
             //-/
-            Route::get('', [UserController::class, 'index']);
+            Route::get('', [UserController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //user/#
-            Route::get('user/{id}', [UserController::class, 'show'])->middleware(['auth:api']);
+            Route::get('user/{id}', [UserController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //roles/
             Route::group(['prefix' => 'roles'], function ($router) {
                 //-/
@@ -69,56 +69,58 @@ Route::group(['prefix' => 'v1'], function () {
         //productos/
         Route::group(['prefix' => 'productos'], function ($router) {
             //-/
-            Route::get('', [ProductoController::class, 'index']);
+            Route::get('', [ProductoController::class, 'index'])->middleware(['auth:api']);
             //store/
-            Route::post('store', [ProductoController::class, 'store'])->middleware(['auth:api']);
+            Route::post('store', [ProductoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador']);
             //update/
-            Route::patch('update/{id}', [ProductoController::class, 'update'])->middleware(['auth:api']);
+            Route::patch('update/{id}', [ProductoController::class, 'update'])->middleware(['auth:api', 'scope:Administrador']);
             //producto/#
-            Route::get('producto/{id}', [ProductoController::class, 'show']);
+            Route::get('producto/{id}', [ProductoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //categorias/
             Route::group(['prefix' => 'categorias'], function ($router) {
                 //-/#
-                Route::get('', [CategoriaController::class, 'index']);
+                Route::get('', [CategoriaController::class, 'index'])->middleware(['auth:api']);
                 //categoria/#
-                Route::get('categoria/{id}', [CategoriaController::class, 'show']);
+                Route::get('categoria/{id}', [CategoriaController::class, 'show'])->middleware(['auth:api']);
             });
             //estado-producto/
-            Route::get('estado-producto', [EstadoproductoController::class, 'index']);
+            Route::get('estado-producto', [EstadoproductoController::class, 'index'])->middleware(['auth:api']);
             //clasificaciones/
-            Route::get('clasificaciones', [ClasificacionController::class, 'index']);
+            Route::get('clasificaciones', [ClasificacionController::class, 'index'])->middleware(['auth:api']);
             //clasificacion/#
-            Route::get('clasificacion/{id}', [ClasificacionController::class, 'show']);
+            Route::get('clasificacion/{id}', [ClasificacionController::class, 'show'])->middleware(['auth:api']);
         });
 
         //pedidos/
         Route::group(['prefix' => 'pedidos'], function ($router) {
             //-/
-            Route::get('', [PedidoController::class, 'index']);
+            Route::get('', [PedidoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //store/
-            Route::post('store', [PedidoController::class, 'store'])->middleware(['auth:api']);
+            Route::post('store', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador']);
+            //update/
+            Route::patch('update/{id}', [PedidoController::class, 'update'])->middleware(['auth:api', 'scope:Administrador']);
             //pedido/#
-            Route::get('pedido/{id}', [PedidoController::class, 'show']);
+            Route::get('pedido/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //personal-de-entrega/
             Route::group(['prefix' => 'personal-de-entrega'], function ($router) {
                 //-/
-                Route::get('', [PersonalEntregaController::class, 'index']);
+                Route::get('', [PersonalEntregaController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
                 //store/
-                Route::post('store', [PersonalEntregaController::class, 'store'])->middleware(['auth:api']);
+                Route::post('store', [PersonalEntregaController::class, 'store'])->middleware(['auth:api', 'scope:Administrador']);
                 //update/
-                Route::patch('update/{id}', [PersonalEntregaController::class, 'update'])->middleware(['auth:api']);
+                Route::patch('update/{id}', [PersonalEntregaController::class, 'update'])->middleware(['auth:api', 'scope:Administrador']);
                 //repartidor/#
-                Route::get('repartidor/{id}', [PersonalEntregaController::class, 'show']);
+                Route::get('repartidor/{id}', [PersonalEntregaController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
                 //vehiculos/
                 Route::group(['prefix' => 'vehiculos'], function ($router) {
                     //-/
-                    Route::get('', [VehiculoController::class, 'index']);
+                    Route::get('', [VehiculoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
                     //vehiculo/#
-                    Route::get('vehiculo/{id}', [VehiculoController::class, 'show']);
+                    Route::get('vehiculo/{id}', [VehiculoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
                     //marcas/
-                    Route::get('marcas', [MarcaController::class, 'index']);
+                    Route::get('marcas', [MarcaController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
                     //tipo-vehiculo/
-                    Route::get('tipo-vehiculo', [TipovehiculoController::class, 'index']);
+                    Route::get('tipo-vehiculo', [TipovehiculoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
                 });
             });
             //estado-pedido/
