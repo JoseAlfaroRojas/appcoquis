@@ -62,7 +62,7 @@ class PedidoController extends Controller
             [
                 'client_name' => 'required',
                 'address' => 'required',
-                'client_telephone_number' => 'numeric'
+                'client_telephone_number' => 'required|numeric'
             ]
         );
 
@@ -156,7 +156,7 @@ class PedidoController extends Controller
         try {
             $pedido = Pedido::find($id);
 
-            $estado =  Estadopedido::find($request->input('estadopedido_id'));
+            $estado =  Estadopedido::find($request->input('id'));
             $pedido->estadousuario()->associate($estado->id);
 
             if ($pedido->update()) {
