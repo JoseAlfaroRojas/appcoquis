@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estadopedido;
 use App\Models\Pedido;
 use App\Models\PersonalEntrega;
+use App\Models\Producto;
 use App\Models\Tipoentrega;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class PedidoController extends Controller
     public function index()
     {
         try {
-            $pedidos = Pedido::orderBy('id')->with(['user', 'productos', 'estadopedido', 'tipoentrega', 'personal_entrega'])->get();
+            $pedidos = Pedido::orderBy('estadopedido_id')->with(['user', 'productos', 'estadopedido', 'tipoentrega', 'personal_entrega'])->get();
             $response = $pedidos;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -61,10 +62,23 @@ class PedidoController extends Controller
             $request->all(),
             [
                 'client_name' => 'required',
-                'address' => 'required',
-                'client_telephone_number' => 'required|numeric'
+                'client_telephone_number' => 'required|numeric',
+                'tipoentrega_id' => 'required'
             ]
         );
+
+        if ($request->input('tipoentrega_id') == 1) {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'client_name' => 'required',
+                    'client_telephone_number' => 'required|numeric',
+                    'tipoentrega_id' => 'required',
+                    'address' => 'required',
+                    'personal_entrega_id' => 'required'
+                ]
+            );
+        }
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), 422);
@@ -98,11 +112,17 @@ class PedidoController extends Controller
             $pedido->total = $request->input('total');
             $pedido->save();
 
-            $productos = $request->input('productos');
-            foreach ($productos as $item) {
-                $pedido->productos()->attach($item['idItem'], [
-                    'amount' => $item['amount'],
-                    'total' => $item['total']
+            $productos = explode(',', $request->input('productos_id'));
+            $cantidades = explode(',', $request->input('cantidades'));
+            $totales = explode(',', $request->input('totales'));
+
+            for ($i = 0; $i < count($productos); $i++) {
+                $producto = Producto::find($productos[$i]);
+                $amount = $cantidades[$i];
+                $total = $totales[$i];
+                $pedido->productos()->attach($producto->id, [
+                    'amount' => $amount,
+                    'total' => $total
                 ]);
             }
 
@@ -151,13 +171,13 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try {
-            $pedido = Pedido::find($id);
+            $pedido = Pedido::find($request->input('id'));
 
-            $estado =  Estadopedido::find($request->input('id'));
-            $pedido->estadousuario()->associate($estado->id);
+            $estado =  Estadopedido::find($request->input('estadopedido_id'));
+            $pedido->estadopedido()->associate($estado->id);
 
             if ($pedido->update()) {
                 $response = 'Pedido actualizado';

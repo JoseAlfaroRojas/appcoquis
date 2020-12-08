@@ -96,9 +96,9 @@ Route::group(['prefix' => 'v1'], function () {
             //-/
             Route::get('', [PedidoController::class, 'index'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //store/
-            Route::post('store', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador']);
+            Route::post('store', [PedidoController::class, 'store'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //update/
-            Route::patch('update/{id}', [PedidoController::class, 'update'])->middleware(['auth:api', 'scope:Administrador']);
+            Route::patch('update/{id}', [PedidoController::class, 'update'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //pedido/#
             Route::get('pedido/{id}', [PedidoController::class, 'show'])->middleware(['auth:api', 'scope:Administrador,Vendedor']);
             //personal-de-entrega/
